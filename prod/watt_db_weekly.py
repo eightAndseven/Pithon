@@ -6,7 +6,6 @@ import decimal
 # cron job every minute
 
 #FUNCTIONS
-
 #function to get mysql connection
 def dbConn():
     db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
@@ -22,7 +21,7 @@ def getYesterweek():
 #function to check last date saved in weekly socket
 def checkLastSavedSocketWeekly(db, x, w):
     cur = db.cursor()
-    sql = "SELECT date_from, date_to, week_number FROM power_weekly WHERE socket_id=%s AND week_number<%s"
+    sql = "SELECT date_from, date_to, week_number FROM power_weekly WHERE socket_id=%s AND week_number<%s ORDER BY week_number DESC"
     cur.execute(sql, (x, w))
     row = cur.fetchone()
     cur.close()
@@ -72,8 +71,8 @@ try:
         while lw < int(week):
             getandsaveDataWeekly(conn, x, ls, le, lw)
             ls, le, lw = ls + timedelta(days=7), le + timedelta(days=7), lw + 1
-except:
-    print "Error"
+except Exception as e:
+    print e
 
 try:
     for x in range(1,6):
