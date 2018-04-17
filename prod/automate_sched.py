@@ -36,6 +36,7 @@ def deleteSched(db, pid):
 def doGPIOhere(row):
     pid, socket_id, date_sched, action, description = row
     print "Executed id", pid, "of socket", socket_id, "turn", action
+    return pid
 
 #START
 #set GPIO board as BCM
@@ -61,8 +62,8 @@ while True:
         if (count >= 1):
             for row in results:
                 #do in GPIO here
-                doGPIOhere(row)
-                pid = row[0]
+                pid = doGPIOhere(row)
+                # pid = row[0]
                 #delete schedule task
                 deleteSched(conn, pid)
         else:
