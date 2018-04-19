@@ -32,9 +32,9 @@ def doGPIOhere(row, pin_d):
     pid, socket_id, date_sched, action, description = row
 
     if action == "off":
-        GPIO.output(pin_d[socket_id], GPIO.HIGH)
+        GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
     elif action == "on":
-        GPIO.output(pin_d[socket_id], GPIO.LOW)
+        GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
 
     print "Executed id", pid, "of socket", socket_id, "turn", action
     return (pid, socket_id)
