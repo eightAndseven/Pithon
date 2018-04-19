@@ -40,16 +40,16 @@ for i in pinList:
 pin_d = {str(pinList.index(x) + 1) : GPIO.input(x) for x in pinList}
 
 #function to do something in rpi GPIO
-def doGPIOhere(row, pin_d):
-    pid, socket_id, date_sched, action, description = row
+# def doGPIOhere(row, pin_d):
+#     pid, socket_id, date_sched, action, description = row
 
-    if action == "off":
-        GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
-    elif action == "on":
-        GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
+#     if action == "off":
+#         GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
+#     elif action == "on":
+#         GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
 
-    print "Executed id", pid, "of socket", socket_id, "turn", action
-    return (pid, socket_id)
+#     print "Executed id", pid, "of socket", socket_id, "turn", action
+#     return (pid, socket_id)
 
 #infinite loop
 while True:
@@ -62,7 +62,14 @@ while True:
         if (count >= 1):
             for row in results:
                 #do GPIO here
-                pid, socket_id = doGPIOhere(row, pin_d)
+                # pid, socket_id = doGPIOhere(row, pin_d)
+                pid, socket_id, date_sched, action, description = row
+                if action == "off":
+                    GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
+                elif action == "on":
+                    GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
+
+                print "Executed id", pid, "of socket", socket_id, "turn", action
 
                 #delete schedule task
                 deleteSched(conn, pid, socket_id)
