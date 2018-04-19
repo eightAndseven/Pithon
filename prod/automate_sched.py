@@ -1,4 +1,4 @@
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 # import MySQLdb as mysql
 from external_db import db_connection as db
 from datetime import datetime as dt
