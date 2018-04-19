@@ -26,10 +26,10 @@ def schedNow(db, now):
     return (count, result)
 
 #function to delete a sched
-def deleteSched(db, pid):
+def deleteSched(db, pid, socket_id):
     cur = db.cursor()
-    sql = "DELETE FROM schedule WHERE id=%s"
-    cur.execute(sql, (pid))
+    sql = "DELETE FROM schedule WHERE id=%s AND socket_id=%s"
+    cur.execute(sql, (pid, sockte_id))
     db.commit()
     cur.close()
 
@@ -37,19 +37,19 @@ def deleteSched(db, pid):
 def doGPIOhere(row):
     pid, socket_id, date_sched, action, description = row
     print "Executed id", pid, "of socket", socket_id, "turn", action
-    return pid
+    return (pid, socket_id)
 
 #START
 #set GPIO board as BCM
 # GPIO.setmode(GPIO.BCM)
 pinList = [18, 23, 24, 4, 17] 
 
-# # set GPIO pin as OUTPUT
-# for i in pinList:
-# 	GPIO.setup(i, GPIO.OUT)
+# set GPIO pin as OUTPUT
+for i in pinList:
+	GPIO.setup(i, GPIO.OUT)
 
 #check GPIO pin and put to dictionary with key matching socket number
-# pin_d = {str(pinList.index(x) + 1) : GPIO.input(x) for x in pinList}
+pin_d = {str(pinList.index(x) + 1) : GPIO.input(x) for x in pinList}
 
 
 #infinite loop
@@ -63,14 +63,13 @@ while True:
         if (count >= 1):
             for row in results:
                 #do in GPIO here
-                pid = doGPIOhere(row)
+                pid, socket_id = doGPIOhere(row)
                 # pid = row[0]
                 #delete schedule task
-                deleteSched(conn, pid)
+                deleteSched(conn, pid, socket_id)
         else:
             print now
         conn.close()
-
         tm.sleep(1)
     except Exception as e:
         print e
