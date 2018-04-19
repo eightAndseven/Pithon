@@ -33,7 +33,7 @@ def doGPIOhere(row, pin_d):
 
     if action == "off":
         GPIO.output(pin_d[socket_id], GPIO.HIGH)
-    else if action == "on":
+    elif action == "on":
         GPIO.output(pin_d[socket_id], GPIO.LOW)
 
     print "Executed id", pid, "of socket", socket_id, "turn", action
