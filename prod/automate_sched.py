@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-# import MySQLdb as mysql
 from external_db import db_connection as db
 from datetime import datetime as dt
 import time as tm
@@ -9,11 +8,6 @@ import time as tm
 #function to return date Yesterday string
 def timeNow():
     return str(dt.now().replace(microsecond=0))
-
-#function to get mysql connection
-# def dbConn():
-#     db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
-#     return db
 
 #function to return a sched
 def schedNow(db, now):
@@ -34,8 +28,14 @@ def deleteSched(db, pid, socket_id):
     cur.close()
 
 #function to do something in rpi GPIO
-def doGPIOhere(row):
+def doGPIOhere(row, pin_d):
     pid, socket_id, date_sched, action, description = row
+
+    if action == "off":
+        GPIO.output(pin_d[socket_id], GPIO.HIGH)
+    else if action == "on":
+        GPIO.output(pin_d[socket_id], GPIO.LOW)
+
     print "Executed id", pid, "of socket", socket_id, "turn", action
     return (pid, socket_id)
 
@@ -62,9 +62,9 @@ while True:
         count, results = schedNow(conn, now)
         if (count >= 1):
             for row in results:
-                #do in GPIO here
-                pid, socket_id = doGPIOhere(row)
-                # pid = row[0]
+                #do GPIO here
+                pid, socket_id = doGPIOhere(row, pin_d)
+
                 #delete schedule task
                 deleteSched(conn, pid, socket_id)
         else:
