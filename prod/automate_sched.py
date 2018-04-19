@@ -29,7 +29,7 @@ def schedNow(db, now):
 def deleteSched(db, pid, socket_id):
     cur = db.cursor()
     sql = "DELETE FROM schedule WHERE id=%s AND socket_id=%s"
-    cur.execute(sql, (pid, sockte_id))
+    cur.execute(sql, (pid, socket_id))
     db.commit()
     cur.close()
 
