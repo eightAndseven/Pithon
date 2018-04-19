@@ -1,5 +1,6 @@
 # import RPi.GPIO as GPIO
-import MySQLdb as mysql
+# import MySQLdb as mysql
+from external_db import db_connection as db
 from datetime import datetime as dt
 import time as tm
 
@@ -10,9 +11,9 @@ def timeNow():
     return str(dt.now().replace(microsecond=0))
 
 #function to get mysql connection
-def dbConn():
-    db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
-    return db
+# def dbConn():
+#     db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
+#     return db
 
 #function to return a sched
 def schedNow(db, now):
@@ -55,7 +56,7 @@ pinList = [18, 23, 24, 4, 17]
 while True:
     try:
         # get database connection
-        conn = dbConn()
+        conn = db()
         now = timeNow()
         # get schedule for now
         count, results = schedNow(conn, now)
