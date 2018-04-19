@@ -1,4 +1,4 @@
-import MySQLdb as mysql
+from external_db import db_connection as db
 from datetime import datetime, timedelta
 import time as tm
 import decimal
@@ -8,11 +8,6 @@ import decimal
 # #function to return date Yesterday string
 def dateYesterday():
     return (datetime.today() - timedelta(days=1)).date()
-
-#function to get mysql connection
-def dbConn():
-    db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
-    return db
 
 #function to check the last date saved for socket
 def checkLastSavedSocket(db, x):
@@ -79,7 +74,7 @@ def getandsaveDataDaily(db, x):
 
 # START
 #get db connection
-conn = dbConn()
+conn = db()
 try:
     #check if less than yesterday data is saved
     for x in range(1,6):

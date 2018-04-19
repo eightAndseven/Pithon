@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import MySQLdb as mysql
+from external_db import db_connection as db
 from datetime import datetime as dt
 import time as tm
 import decimal
@@ -30,7 +30,7 @@ for i in pinList:
 
 
 # get connection and get cursor for db
-conn = dbConn()
+conn = db()
 cur = conn.cursor()
 
 # get arduino value from serial

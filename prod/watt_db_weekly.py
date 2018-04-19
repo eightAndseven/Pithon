@@ -1,4 +1,4 @@
-import MySQLdb as mysql
+from external_db import db_connection as db
 from datetime import datetime, timedelta
 import time as tm
 import decimal
@@ -6,11 +6,6 @@ import decimal
 # cron job every minute
 
 #FUNCTIONS
-#function to get mysql connection
-def dbConn():
-    db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
-    return db
-
 #function to get last week number
 def getYesterweek():
     d = datetime.now().date() - timedelta(days=7)
@@ -59,7 +54,7 @@ def getandsaveDataWeekly(db, x, s, e, w):
         db.rollback()
 
 #START
-conn = dbConn()
+conn = db()
 start, end, week = getYesterweek()
 start, end, week = (str(start), str(end), str(week))
 
