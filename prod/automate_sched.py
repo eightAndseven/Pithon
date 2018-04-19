@@ -27,18 +27,6 @@ def deleteSched(db, pid, socket_id):
     db.commit()
     cur.close()
 
-#function to do something in rpi GPIO
-def doGPIOhere(row, pin_d):
-    pid, socket_id, date_sched, action, description = row
-
-    if action == "off":
-        GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
-    elif action == "on":
-        GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
-
-    print "Executed id", pid, "of socket", socket_id, "turn", action
-    return (pid, socket_id)
-
 #START
 #set GPIO board as BCM
 GPIO.setmode(GPIO.BCM)
@@ -51,6 +39,17 @@ for i in pinList:
 #check GPIO pin and put to dictionary with key matching socket number
 pin_d = {str(pinList.index(x) + 1) : GPIO.input(x) for x in pinList}
 
+#function to do something in rpi GPIO
+def doGPIOhere(row, pin_d):
+    pid, socket_id, date_sched, action, description = row
+
+    if action == "off":
+        GPIO.output(pin_d[str(socket_id)], GPIO.HIGH)
+    elif action == "on":
+        GPIO.output(pin_d[str(socket_id)], GPIO.LOW)
+
+    print "Executed id", pid, "of socket", socket_id, "turn", action
+    return (pid, socket_id)
 
 #infinite loop
 while True:
