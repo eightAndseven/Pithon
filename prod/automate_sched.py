@@ -41,7 +41,7 @@ def doGPIOhere(row):
 
 #START
 #set GPIO board as BCM
-# GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)
 pinList = [18, 23, 24, 4, 17] 
 
 # set GPIO pin as OUTPUT
