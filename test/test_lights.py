@@ -14,6 +14,9 @@ light_dim = float(sys.argv[1]) * .01
 if light_dim == 0:
     # g.output(p, g.HIGH)
     print('off')
+elif light_dim == 100:
+    s(max_time)
+    print('highest')
 else:
     print('dim at', light_dim)
     dim_time = max_time * light_dim
