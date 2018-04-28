@@ -6,12 +6,13 @@ g.setmode(g.BCM)
 p = 17
 g.setup(p, g.OUT)
 g.output(p, g.HIGH)
+s(.1)
 
 max_time = 7.446
 light_dim = float(sys.argv[1]) * .01
 
 if light_dim == 0:
-    g.output(p, g.HIGH)
+    # g.output(p, g.HIGH)
     print('off')
 else:
     print('dim at', light_dim)
@@ -23,7 +24,7 @@ else:
     #off
     print('off')
     g.output(p, g.HIGH)
-    s(.05)
+    s(.1)
     #on
     print('stay in dim')
     g.output(p, g.LOW)
