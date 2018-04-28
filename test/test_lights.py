@@ -5,6 +5,7 @@ import RPi.GPIO as g
 g.setmode(g.BCM)
 p = 17
 g.setup(p, g.OUT)
+g.output(p, g.HIGH)
 
 max_time = 7.446
 light_dim = float(sys.argv[1]) * .01
