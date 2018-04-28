@@ -15,6 +15,7 @@ if light_dim == 0:
     # g.output(p, g.HIGH)
     print('off')
 elif light_dim == 1:
+    g.output(g.LOW)
     s(max_time)
     print('highest')
 else:
