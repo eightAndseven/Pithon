@@ -36,7 +36,7 @@ cur = conn.cursor()
 
 # get arduino value from serial
 arduino = serial.Serial("/dev/ttyACM0")
-arduino.baudrate=9600
+arduino.baudrate=57600
 tm.sleep(2)
 
 #infinite loop
