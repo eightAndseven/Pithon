@@ -44,6 +44,7 @@ while True:
         # get value from serial
         data = arduino.readline()
         data = data.replace('\r\n', '')
+        print data
         #get value separated by tab
         d = dict(x.split(":") for x in data.split(";"))
 
@@ -70,7 +71,7 @@ while True:
                     #sql string to execute
                     sql = "INSERT INTO power_con (socket_id, watt_cons, date_time) VALUES (%s, %s, %s)"
                     #sql execute with values (socket id, wattage consumed from arduino, date_time)
-                    cur.execute(sql, (pin_count, d[str(pin_count)], now)
+                    cur.execute(sql, (pin_count, d[str(pin_count)], now))
                     #commit to database
                     conn.commit()
                     
