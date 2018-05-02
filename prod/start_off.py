@@ -7,6 +7,6 @@ pinList = [18, 23, 24, 4, 17]
 
 # set GPIO pin as OUTPUT and turn off
 for i in pinList:
-	GPIO.setup(i, GPIO.OUT)
-    GPIO.input(i, GPIO.HIGH)
+    GPIO.setup(i, GPIO.OUT)
+    GPIO.output(i, GPIO.HIGH)
 #END
