@@ -31,15 +31,31 @@ writer = csv.writer(file)
 writer.writerow(['1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s', 'appliance'])
 app_list = [x[0] for x in getUniqAppliance(db)[1]]
 
+# app_count = 
+# print([x for x in getUniqAppliance(db)[0]])
+app_count = []
+for i in app_list:
+    watt_consumed = getConAppliance(db,i)
+    app_count.append(watt_consumed[0])
+app_count.sort()
+smallest = app_count[0] + 500
+
 for i in app_list:
     watt_consumed = getConAppliance(db, i)
     watt = [float(x[0]) for x in watt_consumed[1]]
     watt_start = 0
     # print(i, watt_consumed[0])
-
-    for ii in range(watt_consumed[0]/10):
-        row = watt[watt_start:watt_start+10]
-        row.append(i)
-        # print(row)
-        writer.writerow(row)
-        watt_start += 10
+    if smallest <= watt_consumed[0]:
+        for ii in range(smallest/10):
+            row = watt[watt_start:watt_start+10]
+            row.append(i)
+            # print(row)
+            writer.writerow(row)
+            watt_start += 10
+    else:
+        for ii in range(watt_consumed[0]/10):
+            row = watt[watt_start:watt_start+10]
+            row.append(i)
+            # print(row)
+            writer.writerow(row)
+            watt_start += 10
