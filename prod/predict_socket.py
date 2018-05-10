@@ -6,7 +6,6 @@ import sys
 import time as tm
 
 socket = sys.argv[1]
-client = boto3.client('machinelearning')
 
 #function to return datenow string
 def timeNow():
@@ -35,6 +34,7 @@ predict = {}
 for i in watt_list:
     predict[str(watt_list.index(i) + 1) + 's'] = str(float(i))
 
+client = boto3.client('machinelearning', region_name='us-east-1')
 response = client.predict(
     MLModelId='ml-kBBGcVrOxIf',
     Record=predict,
