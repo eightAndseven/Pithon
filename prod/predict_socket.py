@@ -34,7 +34,7 @@ predict = {}
 for i in watt_list:
     predict[str(watt_list.index(i) + 1) + 's'] = str(float(i))
 
-client = boto3.client('machinelearning', region_name='us-east-1')
+client = boto3.client('machinelearning', region_name='us-east-1', aws_access_key='AKIAIVO4R7QKCHISHJAQ', aws_secret_access_key='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')
 response = client.predict(
     MLModelId='ml-kBBGcVrOxIf',
     Record=predict,
