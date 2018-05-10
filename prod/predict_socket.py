@@ -32,7 +32,7 @@ result = getWatt(conn, now, then, socket)
 watt_list = result[1]
 predict = {}
 for i in watt_list:
-    predict[str(watt_list.index(i) + 1) + 's'] = i
+    predict[str(watt_list.index(i) + 1) + 's'] = str(float(i))
 
 print(predict)
 
