@@ -1,6 +1,6 @@
 from __future__ import print_function
 from datetime import datetime, timedelta
-# from external_db import db_connection as db
+from external_db import db_connection as db
 import boto3
 import sys
 import time as tm
