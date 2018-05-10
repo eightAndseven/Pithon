@@ -45,3 +45,4 @@ response = client.predict(
 )
 
 print('Predicted is ' + response['Prediction']['predictedLabel'])
+print(response)
