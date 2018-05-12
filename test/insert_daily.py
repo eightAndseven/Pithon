@@ -17,7 +17,9 @@ def getPowerConsumed(db, x, d):
     for row in results:
         f = f + float(row[1])
     if count != 0:
+        count = float(count)
         f = (f/count * ((count/60)/60))
+        print(f)
     cur.close()
     curinsert = db.cursor()
     sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
