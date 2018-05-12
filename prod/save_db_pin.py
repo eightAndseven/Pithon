@@ -60,11 +60,18 @@ while True:
                 now = timeNow()
                 #sql string to execute
                 sql = "INSERT INTO power_con (socket_id, watt_cons, date_time) VALUES (%s, %s, %s)"
-                #sql execute with values (socket id, wattage consumed from arduino, date_time)
-                cur.execute(sql, (pin_count, d[str(pin_count)], now))
-                #commit to database
+                #check if value from arduino is less than 1.000
+                if float(d[str(pin_count)]) > 1.00:
+                    #sql execute with values (socket id, wattage consumed from arduino, date_time)
+                    cur.execute(sql, (pin_count, d[str(pin_count)], now))
+                    #commit to database
+                    conn.commit()
+            else:
+                #save into socket if socket is off
+                curinsert = db.cursor()
+                sql = "UPDATE socket SET appliance='NONE' WHERE socket_id=%s"
+                cur.execute(sql, (pin_count,))
                 conn.commit()
-                    
         #sleep for 1 second
         tm.sleep(.5)
 
