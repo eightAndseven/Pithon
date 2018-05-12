@@ -69,8 +69,7 @@ while True:
             else:
                 #save into socket if socket is off
                 curinsert = db.cursor()
-                sql = "UPDATE socket SET appliance='NONE' WHERE id=%s"
-                cur.execute(sql, (pin_count,))
+                cur.execute("""UPDATE socket SET appliance='NONE' WHERE id=%s""", (pin_count,))
                 conn.commit()
         #sleep for 1 second
         tm.sleep(.5)
