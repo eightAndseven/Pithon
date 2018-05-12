@@ -5,8 +5,6 @@ import boto3
 import sys
 import time as tm
 
-socket = sys.argv[1]
-
 #function to return datenow string
 def timeNow():
     return datetime.now().replace(microsecond = 0)
@@ -23,10 +21,21 @@ def getWatt(db, n, t, s):
         plist.append(row[0])
     return (count,plist)
 
+def saveAppliance(db, t, s)
+    cur = db.cursor()
+    sql = """UPDATE socket SET appliance=%s WHERE id=%s"""
+    cur.execute(sql, (t,s))
+    db.commit()
+
+# START
+socket = sys.argv[1]
+
+conn = db()
+saveAppliance(conn, 'Please wait...', socket)
+
 now = timeNow()
 tm.sleep(10)
 then = now + timedelta(0,10)
-conn = db()
 
 result = getWatt(conn, now, then, socket)
 watt_list = result[1]
@@ -36,13 +45,16 @@ for i in watt_list:
 
 client = boto3.client('machinelearning', 
                     region_name='us-east-1', 
-                    aws_access_key_id='AKIAJYNTS5FHQUFXFW4A', 
-                    aws_secret_access_key='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')
+                    aws_access_key_id='XXXXX', 
+                    aws_secret_access_key='XXXXXXXX')
 response = client.predict(
     MLModelId='ml-kBBGcVrOxIf',
     Record=predict,
     PredictEndpoint='https://realtime.machinelearning.us-east-1.amazonaws.com'
 )
 
+predictedlabel = response['Prediction']['predictedLabel']
+
+saveAppliance(conn, predictedlabel, socket)
 print('Predicted is ' + response['Prediction']['predictedLabel'])
 print(response)
