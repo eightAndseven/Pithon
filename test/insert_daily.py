@@ -11,7 +11,7 @@ def getPowerConsumed(db, x, d):
     sql = "SELECT socket_id, watt_cons FROM power_con WHERE CAST(date_time as DATE)=%s and socket_id=%s"
     cur.execute(sql, (d, x))
     count = float(cur.rowcount)
-    print(count)
+    print('count is',count)
     results = cur.fetchall()
     f = 0.000
     for row in results:
