@@ -21,7 +21,7 @@ def getWatt(db, n, t, s):
         plist.append(row[0])
     return (count,plist)
 
-def saveAppliance(db, t, s)
+def saveAppliance(db, t, s):
     cur = db.cursor()
     sql = """UPDATE socket SET appliance=%s WHERE id=%s"""
     cur.execute(sql, (t,s))
