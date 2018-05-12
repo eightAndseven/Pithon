@@ -59,10 +59,12 @@ def getandsaveDataDaily(db, x):
     sql = "SELECT socket_id, watt_cons FROM power_con WHERE CAST(date_time as DATE)=%s AND socket_id=%s"
     d = str(dateYesterday())
     cur.execute(sql, (d, x))
+    count = cur.rowcount
     results = cur.fetchall()
     f = 0.000
     for row in results:
         f = f + float(row[1])
+    f = (f/count * ((count/60)/60))
     cur.close()
     curinsert = db.cursor()
     sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
