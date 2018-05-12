@@ -13,6 +13,7 @@ def getPowerConsumed(db, x, d):
     count = cur.rowcount
     print('count is',count)
     results = cur.fetchall()
+    print(count + 100000000)
     f = 0.000
     for row in results:
         f = f + float(row[1])
