@@ -17,21 +17,25 @@ def getPowerConsumed(db, x, d):
     f = 0.000
     for row in results:
         f = f + float(row[1])
-    f = (f/count * ((count/60)/60))
+    if count != 0:
+        print('do nothing')
+    else:
+        f = (f/count * ((count/60)/60))
     cur.close()
-    # curinsert = db.cursor()
-    # sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
-    # try:
-    #     curinsert.execute(sql, (x, f, d))
-    #     db.commit()
-    # except Exception as e:
-    #     db.rollback()
-    #     print(e)
-    # curinsert.close()
+    curinsert = db.cursor()
+    sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
+    try:
+        curinsert.execute(sql, (x, f, d))
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(e)
+    curinsert.close()
 
 
 x = raw_input('Enter date: ')
 d = datetime.strptime(x, '%Y-%m-%d').date()
 db = dbConn()
 for i in range(1,6):
+    print('range')
     getPowerConsumed(db, i, d)
