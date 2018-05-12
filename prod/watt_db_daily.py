@@ -29,7 +29,8 @@ def saveDate(db, x, d):
     f = 0.000
     for row in results:
         f = f + float(row[1])
-    f = (f/count * ((count/60)/60))
+    if count != 0:
+        f = (f/count * ((count/60)/60))
     cur.close()
     curinsert = db.cursor()
     sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
