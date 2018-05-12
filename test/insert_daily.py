@@ -12,6 +12,7 @@ def getPowerConsumed(db, x, d):
     cur.execute(sql, (d, x))
     count = float(cur.rowcount)
     print('count is',count)
+    print('something is wrong')
     results = cur.fetchall()
     f = 0.000
     for row in results:
