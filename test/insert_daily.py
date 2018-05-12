@@ -8,17 +8,17 @@ def dbConn():
     return db
 def getPowerConsumed(db, x, d):
     cur = db.cursor()
-    sql = "SELECT watt_cons FROM power_con WHERE CAST(date_time as DATE)=%s and socket_id=%s"
+    sql = "SELECT socket_id, watt_cons FROM power_con WHERE CAST(date_time as DATE)=%s and socket_id=%s"
     cur.execute(sql, (d, x))
     count = cur.rowcount
     results = cur.fetchall()
     f = 0.000
     for row in results:
-        f = f + float(row[0])
+        f = f + float(row[1])
     f = (f/count * ((count/60)/60))
     cur.close()
     curinsert = db.cursor()
-    sql = "SELECT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
     try:
         curinsert.execute(sql, (x, f, d))
         db.commit()
