@@ -17,7 +17,7 @@ def getPowerConsumed(db, x, d):
         f = f + float(row[0])
     f = (f/count * ((count/60)/60))
     cur.close()
-    curinstert = db.cursor()
+    curinsert = db.cursor()
     sql = "SELECT INTO power_daily(socket_id, watt_cons, date) VALUES (%s, %s, %s)"
     try:
         curinsert.execute(sql, (x, f, d))
