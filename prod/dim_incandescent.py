@@ -6,7 +6,7 @@ dim = str(sys.argv[1])
 
 ser = serial.Serial(
     
-    port='COM6',
+    port='/dev/ttyACM0',
     baudrate = 9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
