@@ -52,7 +52,7 @@ for i in app_list:
 
     count = 0
     # save the data to csv
-    for ii in range(smallest):
+    for ii in range(smallest/10):
         # [first_ave, second_ave, appliance]
         row = [np.mean(watt[count:count+5]), np.mean(watt[count+6:count+10]), i]
         count+=10
