@@ -2,12 +2,10 @@ from __future__ import print_function
 import csv
 import MySQLdb as mysql
 
-# function to get a connection to mysql
 def db_connection():
-    db = mysql.connect(host="localhost", user="power", passwd="board", db="powerboard")
+    db = mysql.connect(host="localhost", user="root", passwd="", db="powerboard")
     return db
 
-# function to get the distincts in power table's appliance
 def getUniqAppliance(db):
     cur = db.cursor()
     sql = 'SELECT DISTINCT train_appliance FROM power_con WHERE train_appliance IS NOT NULL;'
@@ -17,7 +15,6 @@ def getUniqAppliance(db):
     cur.close()
     return (count, results)
 
-# function to get the appliance's wattage consumed from the table
 def getConAppliance(db, app):
     cur = db.cursor()
     sql = "SELECT watt_cons FROM power_con WHERE train_appliance=%s"
@@ -27,32 +24,38 @@ def getConAppliance(db, app):
     cur.close()
     return (count, results)
 
-# START
-db = db_connection()
 
-# create csv file '''aw_a.csv'''
-file = open('aw_a.csv', 'wb')
+db = db_connection()
+file = open('test.csv', 'wb')
 writer = csv.writer(file)
-writer.writerow(['amps', 'watts', 'appliance'])
+writer.writerow(['1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s', 'appliance'])
 app_list = [x[0] for x in getUniqAppliance(db)[1]]
 
-# get the smallest data that was collected to be basis
+# app_count = 
+# print([x for x in getUniqAppliance(db)[0]])
 app_count = []
 for i in app_list:
     watt_consumed = getConAppliance(db,i)
     app_count.append(watt_consumed[0])
 app_count.sort()
-smallest = app_count[0]
+smallest = app_count[0] + 500
 
-# get the query and save to csv file 
 for i in app_list:
-    watt_consumed = getConAppliance()
+    watt_consumed = getConAppliance(db, i)
     watt = [float(x[0]) for x in watt_consumed[1]]
-    # save the data to csv
-    for ii in range(smallest):
-        # [amps, watt, appliance]
-        row = [watt[i]/220, watt[i]]
-        row.append(i)
-        writer.writerow(row)
-
-# END
+    watt_start = 0
+    # print(i, watt_consumed[0])
+    if smallest <= watt_consumed[0]:
+        for ii in range(smallest/10):
+            row = watt[watt_start:watt_start+10]
+            row.append(i)
+            # print(row)
+            writer.writerow(row)
+            watt_start += 10
+    else:
+        for ii in range(watt_consumed[0]/10):
+            row = watt[watt_start:watt_start+10]
+            row.append(i)
+            # print(row)
+            writer.writerow(row)
+            watt_start += 10
