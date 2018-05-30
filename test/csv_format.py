@@ -55,6 +55,7 @@ for i in app_list:
     for ii in range(smallest):
         # [first_ave, second_ave, appliance]
         row = [np.mean(watt[count:count+5]), np.mean(watt[count+6:count+10]), i]
+        count+=10
         writer.writerow(row)
 
 # END
