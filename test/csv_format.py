@@ -31,7 +31,7 @@ def getConAppliance(db, app):
 db = db_connection()
 
 # create csv file '''aw_a.csv'''
-file = open('aw_a.csv', 'wb')
+file = open('appliance_data.csv', 'wb')
 writer = csv.writer(file)
 writer.writerow(['amps', 'watts', 'appliance'])
 app_list = [x[0] for x in getUniqAppliance(db)[1]]
@@ -46,7 +46,7 @@ smallest = app_count[0]
 
 # get the query and save to csv file 
 for i in app_list:
-    watt_consumed = getConAppliance()
+    watt_consumed = getConAppliance(db, i)
     watt = [float(x[0]) for x in watt_consumed[1]]
     # save the data to csv
     for ii in range(smallest):
