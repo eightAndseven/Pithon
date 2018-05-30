@@ -1,4 +1,5 @@
 from __future__ import print_function
+import numpy as np
 import csv
 import MySQLdb as mysql
 
@@ -31,9 +32,9 @@ def getConAppliance(db, app):
 db = db_connection()
 
 # create csv file '''aw_a.csv'''
-file = open('appliance_data.csv', 'wb')
+file = open('app_ave_data.csv', 'wb')
 writer = csv.writer(file)
-writer.writerow(['amps', 'watts', 'appliance'])
+writer.writerow(['first_ave', 'second_ave', 'appliance'])
 app_list = [x[0] for x in getUniqAppliance(db)[1]]
 
 # get the smallest data that was collected to be basis
@@ -48,11 +49,12 @@ smallest = app_count[0]
 for i in app_list:
     watt_consumed = getConAppliance(db, i)
     watt = [float(x[0]) for x in watt_consumed[1]]
+
+    count = 0
     # save the data to csv
     for ii in range(smallest):
-        # [amps, watt, appliance]
-        row = [watt[ii]/220, watt[ii]]
-        row.append(i)
+        # [first_ave, second_ave, appliance]
+        row = [np.mean([count:count+5]), np.mean([count+6:count+10]), i]
         writer.writerow(row)
 
 # END
