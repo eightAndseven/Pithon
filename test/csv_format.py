@@ -51,7 +51,7 @@ for i in app_list:
     # save the data to csv
     for ii in range(smallest):
         # [amps, watt, appliance]
-        row = [watt[i]/220, watt[i]]
+        row = [watt[ii]/220, watt[ii]]
         row.append(i)
         writer.writerow(row)
 
