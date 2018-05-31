@@ -38,25 +38,23 @@ tm.sleep(10)
 then = now + timedelta(0,10)
 
 result = getWatt(conn, now, then, socket)
-watt_list = list(result[1])
-watt_list = [float(x) for x in watt_list]
-print(watt_list)
-watt_list = [np.mean(watt_list[:5]), np.mean(watt_list[5:])]
-print(watt_list)
-predict = {
-	'first_ave': str(watt_list[0]),
-	'second_ave': str(watt_list[1])
-}
-client = boto3.client('lambda', 
+watt_list = result[1]
+predict = {}
+for i in watt_list:
+    predict[str(watt_list.index(i) + 1) + 's'] = str(float(i))
+
+client = boto3.client('machinelearning', 
                     region_name='us-east-1', 
-                    aws_access_key_id='XXXXXX', 
+                    aws_access_key_id='XXXXX', 
                     aws_secret_access_key='XXXXXXXX')
-response = client.invoke(
-	FunctionName='arn:aws:lambda:us-east-1:497819500052:function:ml-powerboard-py27',
-	InvocationType='RequestResponse',
-	Payload=json.dumps(predict)
+response = client.predict(
+    MLModelId='ml-kBBGcVrOxIf',
+    Record=predict,
+    PredictEndpoint='https://realtime.machinelearning.us-east-1.amazonaws.com'
 )
 
-predictedlabel = json.loads(response['Payload'].read())['predictedOutput']
+predictedlabel = response['Prediction']['predictedLabel']
 
 saveAppliance(conn, predictedlabel, socket)
+print('Predicted is ' + response['Prediction']['predictedLabel'])
+print(response)
