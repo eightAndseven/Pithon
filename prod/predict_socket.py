@@ -4,6 +4,7 @@ from external_db import db_connection as db
 import boto3
 import sys
 import time as tm
+import numpy as np
 
 #function to return datenow string
 def timeNow():
