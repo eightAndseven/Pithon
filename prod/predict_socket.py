@@ -5,6 +5,7 @@ import boto3
 import sys
 import time as tm
 import numpy as np
+import json
 
 #function to return datenow string
 def timeNow():
