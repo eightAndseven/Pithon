@@ -43,11 +43,13 @@ result = getWatt(conn, now, then, socket)
 watt_list = list(result[1])
 watt_list = [float(x) for x in watt_list]
 print(watt_list)
-watt_list = [np.mean(watt_list[:5]), np.mean(watt_list[5:])]
+watt_lists = [np.mean(watt_list[:5]), np.mean(watt_list[5:])]
 print(watt_list)
 predict = {
-	'first_ave': str(watt_list[0]),
-	'second_ave': str(watt_list[1])
+    'socket' : str(socket),
+	'first_ave' : str(watt_lists[0]),
+	'second_ave' : str(watt_lists[1]),
+    'values' : watt_list
 }
 client = boto3.client('lambda', 
                     region_name='us-east-1', 

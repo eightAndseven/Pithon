@@ -10,15 +10,6 @@ import serial
 def timeNow():
     return str(dt.now().replace(microsecond = 0))
 
-#function to get mysql connection
-def dbConn():
-    db = mysql.connect(host="localhost", user="power", passwd="board", db="powerboard")
-    return db
-
-#function to dump power data
-def randDecimal():
-    return float(decimal.Decimal(random.randrange(10000))/100)
-
 # START
 
 #set GPIO board as BCM
